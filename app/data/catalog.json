@@ -1,0 +1,41 @@
+{
+	"catalog" : [
+		{
+			"id": "item001",
+			"name": "Cabbage",
+			"imagesrc": "/images/catalog/cabbage.png",
+			"description": "Goes well with tonkatsu.",
+			"price": 1.29
+		},{
+			"id": "item002",
+			"name": "Chuckit",
+			"imagesrc": "/images/catalog/chuckit.png",
+			"description": "What exactly is a 'chuckit'?  I had to look it up.",
+			"price": 7.82
+		},{
+			"id": "item003",
+			"name": "Ammo",
+			"imagesrc": "/images/catalog/ammo.png",
+			"description": "Bang bang.",
+			"price": 0.20
+		},{
+			"id": "item004",
+			"name": "DVD",
+			"imagesrc": "/images/catalog/dvd.png",
+			"description": "or really, Blu-rays are quite fine too",
+			"price": 14.77
+		},{
+			"id": "item005",
+			"name": "Pants",
+			"imagesrc": "/images/catalog/pants.png",
+			"description": "Long, not short.",
+			"price": 34.73
+		},{
+			"id": "item006",
+			"name": "Drill",
+			"imagesrc": "/images/catalog/drill.png",
+			"description": "Build me something.",
+			"price": 28.96
+		}
+	]
+}

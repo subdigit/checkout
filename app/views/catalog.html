@@ -1,0 +1,5 @@
+<div ng-repeat="item in catalogkeeper">
+  <table class="catalog">
+  	<tr><td class="item"><span class="itemimage"><img width='100' height='100' ng-src="{{item.imagesrc}}" /></span></td><td><span class="itemname">{{item.name}}</span></td><td><span class="itemdesc">{{item.description}}</span></td><td><span class="itemprice">{{item.price | currency}}</span></td></tr>
+  </table>
+</div>

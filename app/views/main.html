@@ -1,0 +1,177 @@
+<style>
+
+.display {
+}
+
+.display .register {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  padding: 0;
+  margin: 0;
+
+  float: left;
+  width: 70%;
+
+  overflow-y: auto;
+  height: 300px;  
+}
+
+.display .register .item {
+  padding: 5px;
+  margin: 10px;
+
+  width: 12rem;
+  height: 12rem;
+
+  border-radius: 20%;
+}
+
+.display .register .item .itemimage {
+  height: 60%;
+  background-position: center;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
+
+.display .purchases {
+  float: left;
+  width: 25%;
+
+  color: #888;
+
+  overflow-y: auto;
+  height: 300px;  
+}
+
+.display .purchases .text {
+  color: #888;
+}
+
+.display .purchases .price {
+  color: #f88;
+}
+
+.accounting {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+.accounting .totaltext {
+  font-size: 1.5em;
+}
+
+.accounting .total {
+  font-size: 1.5em;
+}
+
+.receipt .item {
+  
+}
+
+.receipt th {
+  text-align: center;
+  padding: 5px;  
+}
+
+.receipt .item td {
+  padding: 5px;  
+}
+
+.receipt .item td span {
+  width: 100%;  
+}
+
+.receipt .item .itemimage {
+  text-align: left;  
+}
+
+.receipt .item .itemname {
+  text-align: left;  
+}
+
+.receipt .item .itemdesc {
+  text-align: left;  
+}
+
+.receipt .item .itemprice {
+  text-align: right;  
+}
+
+.receipt .item .itemcount {
+  text-align: center;
+}
+
+.receipt .item .itemcost {
+  text-align: right;  
+}
+
+</style>
+
+<script type="text/ng-template" id="receipt.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Thank You!</h3>
+  </div>
+  <div class="modal-body">
+    <div class="receipt">
+      <table>
+        <tr>
+          <th></th>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Cost</th>
+        </tr>
+        <tr class="item" ng-repeat="(itemid,count) in counters track by $index" ng-if="count>0">
+          <td class="itemimage"><img width='50' height='50' ng-src="{{register.getCatalogItem(itemid).imagesrc}}" /></td>
+          <td class="itemname">{{register.getCatalogItem(itemid).name}}</td>
+          <td class="itemdesc">{{register.getCatalogItem(itemid).description}}</td>
+          <td class="itemprice">{{register.getCatalogItem(itemid).price | currency}}</td>
+          <td class="itemcount">{{register.getCount(itemid)}}</td>
+          <td class="itemcost">{{register.getCount(itemid) * register.getCatalogItem(itemid).price | currency}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="accounting">
+      <div><span class="subtotaltext">Subtotal:</span> <span class="subtotal">{{register.subtotal | currency}}</span></div>
+      <div><span class="taxtext">Tax:</span> <span class="tax">{{register.getTax()}}%</span></div>
+      <div><span class="totaltext">Total:</span> <span class="total">{{register.subtotal * (1+register.getTax()/100) | currency}}</span></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="print()">Print</button>
+    <button class="btn btn-primary" type="button" ng-click="email()">Email</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+  </div>
+</script>
+
+<div class="container-fluid">
+  <div class="display row">
+    <div class="register">
+      <div class="btn btn-lg btn-default item" ng-click="purchaseItem(item)" ng-repeat="item in catalogkeeper">
+        <div>{{item.name}} ({{getCount(item.id)}})</div>
+        <div class="itemimage" style="background-image: url({{item.imagesrc}});"></div>
+        <!-- div class="itemimage"><img width="50" height="50" ng-src="{{item.imagesrc}}" /></div -->
+        <div>{{item.price | currency}}</div>
+      </div>
+    </div>
+    <div class="purchases">
+      <div ng-repeat="purchase in purchases track by $index">
+        <a class="btn btn-xs" ng-click="removePurchase($index);"><span class="glyphicon glyphicon-remove"></span> <span class="text">{{purchase.name}}</span> - <span class="price">{{purchase.price | currency}}</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="results row">
+    <div class="accounting">
+      <div><span class="subtotaltext">Subtotal:</span> <span class="subtotal">{{subtotal | currency}}</span></div>
+      <div><span class="taxtext">Tax:</span> <span class="tax">{{getTax()}}%</span></div>
+      <div><span class="totaltext">Total:</span> <span class="total">{{subtotal * (1+getTax()/100) | currency}}</span></div>
+    </div>
+  </div>
+  <div class="row">
+    <a class="btn btn-lg btn-success" ng-click="generateReceipt();">Receipt <span class="glyphicon glyphicon-align-left"></span></a>
+    <a class="btn btn-lg btn-danger" ng-click="clearPurchases();">Clear <span class="glyphicon glyphicon-remove"></span></a>
+  </div>
+</div>
